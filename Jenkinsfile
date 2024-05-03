@@ -54,10 +54,16 @@ pipeline {
 
     post {
         success {
-            emailext attachLog: true, subject: 'Pipeline Successful', to: 'your-email@example.com'
+            echo '=== Pipeline successfully executed ==='
+            emailext body: "Pipeline execution succeeded. Check logs for details.", 
+                     subject: "Pipeline Success", 
+                     to: "your-email@example.com"
         }
         failure {
-            emailext attachLog: true, subject: 'Pipeline Failed', to: 'your-email@example.com'
+            echo '=== Pipeline execution failed ==='
+            emailext body: "Pipeline execution failed. Check logs for details.", 
+                     subject: "Pipeline Failure", 
+                     to: "your-email@example.com"
         }
     }
 }
