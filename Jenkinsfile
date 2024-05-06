@@ -60,7 +60,7 @@ pipeline {
                      to: "thenusan1997@gmail.com"
         }
         failure {
-            echo '=== Pipeline execution fail ==='
+            echo '=== Pipeline execution failed ==='
             emailext body: "Pipeline execution failed. Check logs for details.", 
                      subject: "Pipeline Failure", 
                      to: "thenusan1997@gmail.com"
