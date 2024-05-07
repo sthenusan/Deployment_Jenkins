@@ -61,18 +61,17 @@ pipeline {
     }
 post {
         success {
-            // Send email notification on successful build
-            sendEmail("thenusan.dev@gmail.com", "Pipeline Success", "Pipeline executed successfully.")
+            echo '=== Pipeline successfully executed ==='
+            mail to:"thenusan1997@gmail.com"
+            emailext body: "Pipeline execution succeeded. Check logs for details.", 
+                     subject: "Pipeline Success", 
+                     
         }
         failure {
-            // Send email notification on build failure
-            sendEmail("thenusan.dev@gmail.com", "Pipeline Failed", "Pipeline execution failed.")
+            echo '=== Pipeline execution failed ==='
+            emailext body: "Pipeline execution failed. Check logs for details.", 
+                     subject: "Pipeline Failure", 
+                     to: "thenusan1997@gmail.com"
         }
     }
-}
-
-def sendEmail(String to, String subject, String body) {
-    mail to: to,
-         subject: subject,
-         body: body
 }
