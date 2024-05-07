@@ -64,15 +64,13 @@ post {
             echo '=== Pipeline successfully executed ==='
             emailext body: "Pipeline execution succeeded. Check logs for details.", 
                      subject: "Pipeline Success", 
-                     to: "thenusan1997@gmail.com",
-                     attachmentsPattern: '**/*.log' 
+                     to: "thenusan1997@gmail.com"
         }
         failure {
             echo '=== Pipeline execution failed ==='
             emailext body: "Pipeline execution failed. Check logs for details.", 
                      subject: "Pipeline Failure", 
-                     to: "thenusan1997@gmail.com",
-                     attachmentsPattern: '**/*.log' 
+                     to: "thenusan1997@gmail.com"
         }
     }
 }
