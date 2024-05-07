@@ -51,19 +51,32 @@ pipeline {
             }
         }
     }
-
-    post {
+    
+        // Define a delay before the pipeline stages are executed
+    options {
+        timestamps() // Show timestamps in build output
+    }
+    triggers {
+        pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
+    }
+post {
+        always {
+            // Send email notification regardless of build result
+            sendEmail("thenusan1997@gmail.com", "Pipeline Notification", "Pipeline execution completed.")
+        }
         success {
-            echo '=== Pipeline successfully executed ==='
-            emailext body: "Pipeline execution succeeded. Check logs for details.", 
-                     subject: "Pipeline Success", 
-                     to: "thenusan1997@gmail.com"
+            // Send email notification on successful build
+            sendEmail("thenusan1997@gmail.com", "Pipeline Success", "Pipeline executed successfully.")
         }
         failure {
-            echo '=== Pipeline execution failed ==='
-            emailext body: "Pipeline execution failed. Check logs for details.", 
-                     subject: "Pipeline Failure", 
-                     to: "thenusan1997@gmail.com"
+            // Send email notification on build failure
+            sendEmail("thenusan1997@gmail.com", "Pipeline Failed", "Pipeline execution failed.")
         }
     }
+}
+
+def sendEmail(String to, String subject, String body) {
+    mail to: to,
+         subject: subject,
+         body: body
 }
