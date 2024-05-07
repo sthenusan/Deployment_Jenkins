@@ -59,19 +59,20 @@ pipeline {
     triggers {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
-}
-post {
-        success {
-            echo '=== Pipeline successfully executed ==='
-            mail to:"thenusan1997@gmail.com"
-            emailext body: "Pipeline execution succeeded. Check logs for details.", 
-                     subject: "Pipeline Success", 
-                     
-        }
-        failure {
-            echo '=== Pipeline execution failed ==='
-            emailext body: "Pipeline execution failed. Check logs for details.", 
-                     subject: "Pipeline Failure", 
-                     to: "thenusan1997@gmail.com"
-        }
+
+    post {
+            success {
+                echo '=== Pipeline successfully executed ==='
+                mail to:"thenusan1997@gmail.com"
+                emailext body: "Pipeline execution succeeded. Check logs for details.", 
+                        subject: "Pipeline Success", 
+                        
+            }
+            failure {
+                echo '=== Pipeline execution failed ==='
+                emailext body: "Pipeline execution failed. Check logs for details.", 
+                        subject: "Pipeline Failure", 
+                        to: "thenusan1997@gmail.com"
+            }
     }
+}
