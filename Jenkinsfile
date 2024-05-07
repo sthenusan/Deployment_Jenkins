@@ -60,10 +60,6 @@ pipeline {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
 post {
-        always {
-            // Send email notification regardless of build result
-            sendEmail("thenusan.dev@gmail.com", "Pipeline Notification", "Pipeline execution completed.")
-        }
         success {
             // Send email notification on successful build
             sendEmail("thenusan.dev@gmail.com", "Pipeline Success", "Pipeline executed successfully.")
