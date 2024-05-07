@@ -60,23 +60,17 @@ pipeline {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
 post {
-        always {
-            // Send email notification regardless of build result
-            sendEmail("thenusan1997@gmail.com", "Pipeline Notification", "Pipeline execution completed.")
-        }
         success {
-            // Send email notification on successful build
-            sendEmail("thenusan1997@gmail.com", "Pipeline Success", "Pipeline executed successfully.")
+            echo '=== Pipeline successfully executed ==='
+            emailext body: "Pipeline execution succeeded. Check logs for details.", 
+                     subject: "Pipeline Success", 
+                     to: "thenusan1997@gmail.com"
         }
         failure {
-            // Send email notification on build failure
-            sendEmail("thenusan1997@gmail.com", "Pipeline Failed", "Pipeline execution failed.")
+            echo '=== Pipeline execution failed ==='
+            emailext body: "Pipeline execution failed. Check logs for details.", 
+                     subject: "Pipeline Failure", 
+                     to: "thenusan1997@gmail.com"
         }
     }
-}
-
-def sendEmail(String to, String subject, String body) {
-    mail to: to,
-         subject: subject,
-         body: body
 }
