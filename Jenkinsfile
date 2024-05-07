@@ -62,7 +62,7 @@ pipeline {
 post {
         always {
             // Send email notification regardless of build result
-            sendEmail("thenusan.dev7@gmail.com", "Pipeline Notification", "Pipeline execution completed.")
+            sendEmail("thenusan.dev@gmail.com", "Pipeline Notification", "Pipeline execution completed.")
         }
         success {
             // Send email notification on successful build
