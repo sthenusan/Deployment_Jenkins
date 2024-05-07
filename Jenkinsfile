@@ -59,6 +59,7 @@ pipeline {
     triggers {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
+}
 post {
         success {
             echo '=== Pipeline successfully executed ==='
@@ -74,4 +75,3 @@ post {
                      to: "thenusan1997@gmail.com"
         }
     }
-}
