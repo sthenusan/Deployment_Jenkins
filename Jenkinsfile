@@ -29,7 +29,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 // Use SonarQube for code analysis
-                echo 'Running code analysis...'
+                echo 'Running code analysis..'
             }
         }
 
