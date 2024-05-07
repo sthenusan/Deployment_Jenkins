@@ -14,6 +14,16 @@ pipeline {
                 // Use JUnit for unit tests and tools like Selenium for integration tests
                 echo 'Running unit and integration tests...'
             }
+            post {
+                success {
+                    // Send success email with logs as attachment
+                    sendNotification('Unit and Integration Tests', 'SUCCESS')
+                }
+                failure {
+                    // Send failure email with logs as attachment
+                    sendNotification('Unit and Integration Tests', 'FAILURE')
+                }
+            }
         }
 
         stage('Code Analysis') {
@@ -27,12 +37,16 @@ pipeline {
             steps {
                 // Use OWASP ZAP for security scanning
                 echo 'Running security scan...'
-
-                emailext body: "Security Scan succeeded. Check logs for details.", 
-                subject: "Pipeline Success", 
-                to: "thenusan.dev@gmail.com",
-                attachLog: true
-                
+            }
+            post {
+                success {
+                    // Send success email with logs as attachment
+                    sendNotification('Security Scan', 'SUCCESS')
+                }
+                failure {
+                    // Send failure email with logs as attachment
+                    sendNotification('Security Scan', 'FAILURE')
+                }
             }
         }
 
@@ -57,28 +71,22 @@ pipeline {
             }
         }
     }
-    
-        // Define a delay before the pipeline stages are executed
+
+    // Define a delay before the pipeline stages are executed
     options {
         timestamps() // Show timestamps in build output
     }
     triggers {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
-// post {
-//         success {
-//             echo '=== Pipeline successfully executed ==='
-//             emailext body: "Pipeline execution succeeded. Check logs for details.", 
-//                      subject: "Pipeline Success", 
-//                      to: "thenusan.dev@gmail.com",
-//                      attachLog: true
-//         }
-//         failure {
-//             echo '=== Pipeline execution failed ==='
-//             emailext body: "Pipeline execution failed. Check logs for details.", 
-//                      subject: "Pipeline Failure", 
-//                      to: "thenusan.dev@gmail.com",
-//                      attachLog: true
-//         }
-//     }
 }
+
+def sendNotification(stageName, status) {
+    emailext (
+        subject: "Pipeline Stage: ${stageName} ${status}",
+        body: "Pipeline stage '${stageName}' ${status.toLowerCase()}ed. Check logs for details.",
+        to: "thenusan.dev@gmail.com",
+        attachLog: true // Attach all log files in workspace
+    )
+}
+
