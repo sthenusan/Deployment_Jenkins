@@ -63,16 +63,20 @@ post {
         success {
             echo '=== Pipeline successfully executed ==='
             emailext body: "Pipeline execution succeeded. Check logs for details.", 
-                     subject: "Pipeline Success", 
+                     subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:", 
                      to: "thenusan.dev@gmail.com",
                      attachLog: true
         }
         failure {
             echo '=== Pipeline execution failed ==='
             emailext body: "Pipeline execution failed. Check logs for details.", 
-                     subject: "Pipeline Failure", 
+                     subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:", 
                      to: "thenusan.dev@gmail.com",
                      attachLog: true
         }
     }
 }
+
+
+
+Check console output at $BUILD_URL to view the results.
