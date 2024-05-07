@@ -27,6 +27,12 @@ pipeline {
             steps {
                 // Use OWASP ZAP for security scanning
                 echo 'Running security scan...'
+
+                emailext body: "Security Scan succeeded. Check logs for details.", 
+                subject: "Pipeline Success", 
+                to: "thenusan.dev@gmail.com",
+                attachLog: true
+                
             }
         }
 
@@ -59,20 +65,20 @@ pipeline {
     triggers {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
     }
-post {
-        success {
-            echo '=== Pipeline successfully executed ==='
-            emailext body: "Pipeline execution succeeded. Check logs for details.", 
-                     subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:", 
-                     to: "thenusan.dev@gmail.com",
-                     attachLog: true
-        }
-        failure {
-            echo '=== Pipeline execution failed ==='
-            emailext body: "Pipeline execution failed. Check logs for details.", 
-                     subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:", 
-                     to: "thenusan.dev@gmail.com",
-                     attachLog: true
-        }
-    }
+// post {
+//         success {
+//             echo '=== Pipeline successfully executed ==='
+//             emailext body: "Pipeline execution succeeded. Check logs for details.", 
+//                      subject: "Pipeline Success", 
+//                      to: "thenusan.dev@gmail.com",
+//                      attachLog: true
+//         }
+//         failure {
+//             echo '=== Pipeline execution failed ==='
+//             emailext body: "Pipeline execution failed. Check logs for details.", 
+//                      subject: "Pipeline Failure", 
+//                      to: "thenusan.dev@gmail.com",
+//                      attachLog: true
+//         }
+//     }
 }
