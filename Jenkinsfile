@@ -72,9 +72,8 @@ pipeline {
         }
     }
 
-    // Define a delay before the pipeline stages are executed
     options {
-        timestamps() // Show timestamps in build output
+        timestamps()
     }
     triggers {
         pollSCM('*/1 * * * *') // Poll the SCM (GitHub) every minute
@@ -84,7 +83,7 @@ pipeline {
 def sendNotification(stageName, status) {
     emailext (
         subject: "Pipeline Stage: ${stageName} ${status}",
-        body: "Pipeline stage '${stageName}' ${status.toLowerCase()}ed. Check logs for details.",
+        body: "Pipeline stage ${stageName} ${status.toLowerCase()}ed. Check logs for details.",
         to: "thenusan.dev@gmail.com",
         attachLog: true // Attach all log files in workspace
     )
